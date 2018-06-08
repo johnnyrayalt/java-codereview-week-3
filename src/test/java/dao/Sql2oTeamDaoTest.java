@@ -37,4 +37,36 @@ public class Sql2oTeamDaoTest {
         Team foundTeam = teamDao.findById(team.getId());
         assertEquals(team, foundTeam);
     }
+
+    @Test
+    public void addedTasksAreReturnedFromgetAll() throws Exception {
+        Team team = new Team();
+        teamDao.add(team);
+        assertEquals(1, teamDao.getAll().size());
+    }
+
+    @Test
+    public void noTeamsReturnsEmptyList() throws Exception {
+        assertEquals(0, teamDao.getAll().size());
+    }
+
+    @Test
+    public void updateChangesTeamContent() throws Exception {
+        String initialTeamName = "Testers";
+        Team team = new Team ();
+        team.setTeamName(initialTeamName);
+        teamDao.add(team);
+
+        teamDao.update(team.getId(),"Test");
+        Team updatedTask = teamDao.findById(team.getId());
+        assertNotEquals(initialTeamName, updatedTask.getTeamName());
+    }
+
+    @Test
+    public void deleteByIdDeletesCorrectTeam() throws Exception {
+        Team team = new Team ();
+        teamDao.add(team);
+        teamDao.deleteById(team.getId());
+        assertEquals(0, teamDao.getAll().size());
+    }
 }

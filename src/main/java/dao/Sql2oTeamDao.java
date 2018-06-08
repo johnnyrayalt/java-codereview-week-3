@@ -46,17 +46,38 @@ public class Sql2oTeamDao implements TeamDao{
     }
 
     @Override
-    public void update(int id, String teamName) {
-
+    public void update(int id, String newTeamName) {
+        String sql = "UPDATE teams SET teamName = :teamName WHERE id=:id";
+        try(Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("teamName", newTeamName)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override
     public void deleteById(int id) {
-
+        String sql = "DELETE from teams WHERE id=:id";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
     }
 
     @Override
     public void clearAllTeams() {
-
+        String sql = "DELETE from teams";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(sql)
+                    .executeUpdate();
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
     }
 }
