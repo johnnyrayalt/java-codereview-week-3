@@ -1,0 +1,44 @@
+{{#partial "content"}}
+
+<div class="container">
+    <h3 class="center">Welcome to the 2018 hack-a-thon!</h3>
+
+    <p class="center">To register a team, fill out and submit the form below</p>
+    <div class="row">
+        <div class="col-sm-6 left-column">
+            <form action="/team/new" method="POST">
+                <label for="teamName">Enter your Team Name:</label><br>
+                <input type="text" id="teamName" name="teamName" value="name"><br>
+                <label for="teamDescription">Enter a short description about your teams objective</label><br>
+                <input type="text" id="teamDescription" name="teamDescription" value="description"><br>
+                <label for="teamMembers">Add team members, separate with a comma (ex. Johnny, Devin)</label>
+                <input type="text" id="teamMembers" name="teamMembers" value="johnny, devin">
+
+                <button class="btn btn-success" type="submit">Submit!</button>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            {{#if team}}
+                <ul class="list-group">
+                    {{#each team}}
+                        <li class="list-group-item">
+                            <p>Team Name</p>
+                            <p><a href="/team/{{id}}">{{this.teamName}}</a></p>
+                        </li>
+                   {{/each}}
+                </ul>
+            {{else}}
+                <p>There are no teams yet.</p>
+            {{/if}}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{{/partial}}
+
+{{> layout.hbs}}
