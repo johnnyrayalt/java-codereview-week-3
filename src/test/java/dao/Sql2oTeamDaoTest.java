@@ -69,4 +69,17 @@ public class Sql2oTeamDaoTest {
         teamDao.deleteById(team.getId());
         assertEquals(0, teamDao.getAll().size());
     }
+
+    @Test
+    public void clearAllClearsAll() throws Exception {
+        Team team = new Team ();
+        Team otherTeam = new Team();
+        team.setTeamName("1");
+        otherTeam.setTeamName("2");
+        teamDao.add(team);
+        teamDao.add(otherTeam);
+        int daoSize = teamDao.getAll().size();
+        teamDao.clearAllTeams();
+        assertTrue(daoSize > 0 && daoSize > teamDao.getAll().size());
+    }
 }
