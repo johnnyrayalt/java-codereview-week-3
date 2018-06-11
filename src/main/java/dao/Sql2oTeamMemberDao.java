@@ -1,9 +1,12 @@
 package dao;
 
+import models.Team;
 import models.TeamMember;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
+
+import java.util.List;
 
 public class Sql2oTeamMemberDao implements TeamMemberDao {
 
@@ -16,7 +19,7 @@ public class Sql2oTeamMemberDao implements TeamMemberDao {
 
     @Override
     public void add(TeamMember newTeamMember) {
-        String sql = "INSERT INTO newTeamMembers (teamMemberName) VALUES (:teamMemberName)";
+        String sql = "INSERT INTO team_members (name) VALUES (:name)";
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
                     .bind(newTeamMember)
@@ -27,4 +30,23 @@ public class Sql2oTeamMemberDao implements TeamMemberDao {
             System.out.println(ex);
         }
     }
+
+    @Override
+    public TeamMember findById(int id) {
+        String sql = "SELECT * FROM team_members WHERE id = :id";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(TeamMember.class);
+        }
+    }
+
+    @Override
+    public List<TeamMember> getAll() {
+        try(Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM team_members")
+                    .executeAndFetch(TeamMember.class);
+        }
+    }
+
 }

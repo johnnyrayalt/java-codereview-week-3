@@ -25,15 +25,43 @@ public class Sql2oTeamMemberDaoTest {
 
     @Test
     public void addingTeamMemberSetsId() throws Exception{
-        TeamMember newTeamMember = setUpNewTeamMemberName();
-        newTeamMember.setName("jeff");
-        int originalTeamMemberId = newTeamMember.getId();
-        teamMemberDao.add(newTeamMember);
-        assertNotEquals(originalTeamMemberId, newTeamMember.getId());
+        TeamMember teamMember = new TeamMember();
+        teamMember.setName("jeff");
+        int originalTeamMemberId = teamMember.getId();
+        teamMemberDao.add(teamMember);
+        assertNotEquals(originalTeamMemberId, teamMember.getId());
     }
 
-    public TeamMember setUpNewTeamMemberName() throws Exception {
-        return new TeamMember();
+    @Test
+    public void getAllReturnsAllTeamMembers() throws Exception {
+        TeamMember newTeamMember = setUpNewTeamMemberName();
+        TeamMember newTeamMember1 = setUpNewTeamMemberName();
+        assertEquals(2, teamMemberDao.getAll().size());
+    }
+
+    @Test
+    public void findByIdReturnsCorrectTeamMember() {
+        TeamMember teamMember = setUpNewTeamMemberName();
+        TeamMember teamMember1 = setUpNewTeamMemberName();
+        teamMemberDao.findById(teamMember.getId());
+        assertEquals(2, teamMember1.getId());
+    }
+
+
+
+    public TeamMember setUpNewTeamMemberName() {
+        TeamMember teamMember = new TeamMember();
+        teamMember.setName("jeff");
+        teamMemberDao.add(teamMember);
+        return teamMember;
+    }
+
+    public Team setUpNewTeam() {
+        Team testTeam = new Team();
+        testTeam.setTeamName("Team 1");
+        testTeam.setTeamDescription("Team 1 Description");
+        teamDao.add(testTeam);
+        return testTeam;
     }
 
 }

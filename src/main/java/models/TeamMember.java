@@ -3,11 +3,11 @@ package models;
 import java.util.Objects;
 
 public class TeamMember {
-    private String teamMemberName;
+    private String name;
     private int id;
 
-    public String getName() { return teamMemberName; }
-    public void setName(String teamMemberName) { this.teamMemberName = teamMemberName; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -18,12 +18,12 @@ public class TeamMember {
         if (o == null || getClass() != o.getClass()) return false;
         TeamMember that = (TeamMember) o;
         return id == that.id &&
-                Objects.equals(teamMemberName, that.teamMemberName);
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(teamMemberName, id);
+        return Objects.hash(name, id);
     }
 }

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS teams (
   teamDescription VARCHAR
 );
 
-CREATE TABLE IF NOT EXISTS newTeamMembers (
+CREATE TABLE IF NOT EXISTS team_members (
   id int PRIMARY KEY auto_increment,
-  teamMemberName VARCHAR
+  name VARCHAR
 );
