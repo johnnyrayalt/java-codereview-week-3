@@ -14,6 +14,6 @@ public interface TeamMemberDao {
 
     void update(int id, String name);
 
-//    void deleteById(int id);
+    void deleteById(int id);
 //    void clearAllTeamMembers();
 }

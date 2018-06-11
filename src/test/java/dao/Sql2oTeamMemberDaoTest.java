@@ -55,6 +55,14 @@ public class Sql2oTeamMemberDaoTest {
         assertEquals("jim", updatedTeamMember.getName());
     }
 
+    @Test
+    public void deleteByIdDeletesCorrectTeamMember() throws Exception {
+        TeamMember teamMember = setUpNewTeamMemberName();
+        TeamMember teamMember1 = setUpNewTeamMemberName();
+        teamMemberDao.deleteById(teamMember.getId());
+        assertEquals(1, teamMemberDao.getAll().size());
+    }
+
     public TeamMember setUpNewTeamMemberName() {
         TeamMember teamMember = new TeamMember();
         teamMember.setName("jeff");
