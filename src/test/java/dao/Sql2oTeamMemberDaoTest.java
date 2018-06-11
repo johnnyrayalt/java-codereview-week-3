@@ -40,14 +40,20 @@ public class Sql2oTeamMemberDaoTest {
     }
 
     @Test
-    public void findByIdReturnsCorrectTeamMember() {
+    public void findByIdReturnsCorrectTeamMember() throws Exception {
         TeamMember teamMember = setUpNewTeamMemberName();
         TeamMember teamMember1 = setUpNewTeamMemberName();
         teamMemberDao.findById(teamMember.getId());
         assertEquals(2, teamMember1.getId());
     }
 
-
+    @Test
+    public void updateCorrectlyChangesTeamMembersName() throws Exception {
+        TeamMember teamMember = setUpNewTeamMemberName();
+        teamMemberDao.update(teamMember.getId(), "jim");
+        TeamMember updatedTeamMember = teamMemberDao.findById(teamMember.getId());
+        assertEquals("jim", updatedTeamMember.getName());
+    }
 
     public TeamMember setUpNewTeamMemberName() {
         TeamMember teamMember = new TeamMember();

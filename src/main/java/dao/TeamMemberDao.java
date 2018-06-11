@@ -12,7 +12,7 @@ public interface TeamMemberDao {
     TeamMember findById(int id);
     List<TeamMember> getAll();
 
-//    void update(int id, String name);
+    void update(int id, String name);
 
 //    void deleteById(int id);
 //    void clearAllTeamMembers();
