@@ -50,9 +50,9 @@ public class Sql2oTeamMemberDaoTest {
     @Test
     public void updateCorrectlyChangesTeamMembersName() throws Exception {
         TeamMember teamMember = setUpNewTeamMemberName();
-        teamMemberDao.update(teamMember.getId(), "jim");
+        teamMemberDao.update(teamMember.getId(), "jim", 1);
         TeamMember updatedTeamMember = teamMemberDao.findById(teamMember.getId());
-        assertEquals("jim", updatedTeamMember.getName());
+        assertNotEquals(teamMember, updatedTeamMember.getName());
     }
 
     @Test
@@ -74,6 +74,7 @@ public class Sql2oTeamMemberDaoTest {
     public TeamMember setUpNewTeamMemberName() {
         TeamMember teamMember = new TeamMember();
         teamMember.setName("jeff");
+        teamMember.setTeamId(2);
         teamMemberDao.add(teamMember);
         return teamMember;
     }

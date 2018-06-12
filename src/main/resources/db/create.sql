@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS teams (
 
 CREATE TABLE IF NOT EXISTS team_members (
   id int PRIMARY KEY auto_increment,
-  name VARCHAR
+  name VARCHAR,
+  teamid int
 );
