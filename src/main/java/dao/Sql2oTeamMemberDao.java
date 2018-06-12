@@ -2,6 +2,7 @@ package dao;
 
 import models.Team;
 import models.TeamMember;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -68,6 +69,17 @@ public class Sql2oTeamMemberDao implements TeamMemberDao {
         try(Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void clearAllTeamMembers() {
+        String sql = "DELETE FROM team_members";
+        try(Connection con = sql2o.open()) {
+            con.createQuery(sql)
                     .executeUpdate();
         } catch (Sql2oException ex) {
             System.out.println(ex);
