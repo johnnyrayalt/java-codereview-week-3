@@ -15,6 +15,15 @@ public class App {
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         Sql2oTeamDao teamDao = new Sql2oTeamDao(sql2o);
 
+        // root
+        get("/", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Team> teams = teamDao.getAll();
+            model.put("team", teams);
+            return new ModelAndView(model, "index.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //delete all teams
         get("/team/delete", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             teamDao.clearAllTeams();
@@ -22,6 +31,7 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
+        //delete team by id
         get("/team/:id/delete", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfTeamToDelete = Integer.parseInt(request.params("id"));
@@ -30,19 +40,14 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-        get("/", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            List<Team> teams = teamDao.getAll();
-            model.put("team", teams);
-            return new ModelAndView(model, "index.hbs");
-        }, new HandlebarsTemplateEngine());
 
-
+        //add new team
         get("/team/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "team-update-form.hbs");
         }, new HandlebarsTemplateEngine());
 
+        //process new team form
         post("/team", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             String teamName = request.queryParams("teamName");
@@ -55,6 +60,7 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
+        //view individual team
         get("/team/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfTeamToFind = Integer.parseInt(req.params("id"));
@@ -63,6 +69,7 @@ public class App {
             return new ModelAndView(model, "team-details.hbs");
         }, new HandlebarsTemplateEngine());
 
+        //update individual team
         get("/team/:id/update", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfTeamToEdit = Integer.parseInt(req.params("id"));
@@ -71,6 +78,7 @@ public class App {
             return new ModelAndView(model, "team-update-form.hbs");
         }, new HandlebarsTemplateEngine());
 
+        //process update form
         post("/team/:id", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             String newTeamName = request.queryParams("teamName");

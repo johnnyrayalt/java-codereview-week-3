@@ -4,6 +4,8 @@
         <form action="/team/{{editTeam.id}}" method="POST">
             <label for="teamName">Change Team Name</label><br>
             <input type="text" id="teamName" name="teamName"><br>
+            <label for="teamDescription">Change Team Description</label><br>
+            <input type="text" id="teamDescription" name="teamDescription"><br>
             <button class="btn btn-success" type="submit">Update</button>
         </form>
     {{else}}

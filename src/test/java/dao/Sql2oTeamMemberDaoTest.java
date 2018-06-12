@@ -89,12 +89,5 @@ public class Sql2oTeamMemberDaoTest {
         return teamMember;
     }
 
-    public Team setUpNewTeam() {
-        Team testTeam = new Team();
-        testTeam.setTeamName("Team 1");
-        testTeam.setTeamDescription("Team 1 Description");
-        teamDao.add(testTeam);
-        return testTeam;
-    }
 
 }
