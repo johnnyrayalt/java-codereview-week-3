@@ -1,12 +1,21 @@
 package dao;
 
 import models.Team;
-import org.sql2o.*;
-import org.junit.*;
-import static org.junit.Assert.*;
+import models.TeamMember;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.sql2o.Connection;
+import org.sql2o.Sql2o;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class Sql2oTeamDaoTest {
     private Sql2oTeamDao teamDao;
+    private Sql2oTeamMemberDao teamMemberDao;
     private Connection conn;
 
     @Before
@@ -14,6 +23,7 @@ public class Sql2oTeamDaoTest {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         teamDao = new Sql2oTeamDao(sql2o);
+        teamMemberDao = new Sql2oTeamMemberDao(sql2o);
         conn = sql2o.open();
     }
 
@@ -28,6 +38,9 @@ public class Sql2oTeamDaoTest {
         int originalTeamId = team.getId();
         teamDao.add(team);
         assertNotEquals(originalTeamId, team.getId());
+    }
+
+    private void assertNotEquals(int originalTeamId, int id) {
     }
 
     @Test
@@ -56,10 +69,9 @@ public class Sql2oTeamDaoTest {
         Team team = new Team ();
         team.setTeamName(initialTeamName);
         teamDao.add(team);
-
         teamDao.update(team.getId(),"Test");
-        Team updatedTask = teamDao.findById(team.getId());
-        assertNotEquals(initialTeamName, updatedTask.getTeamName());
+        Team updatedTeam = teamDao.findById(team.getId());
+        assertFalse(updatedTeam.getTeamName().equals(initialTeamName));
     }
 
     @Test
@@ -82,4 +94,34 @@ public class Sql2oTeamDaoTest {
         teamDao.clearAllTeams();
         assertTrue(daoSize > 0 && daoSize > teamDao.getAll().size());
     }
+
+    @Test
+    public void getAllTeamMembersByTeamReturnsTeamMembersCorrectly() throws Exception {
+        Team team = new Team();
+        team.setTeamName("Testers");
+        team.setTeamDescription("Testin things");
+        teamDao.add(team);
+        int teamId = team.getId();
+
+        TeamMember teamMember = new TeamMember();
+        teamMember.setName("jeff");
+        teamMember.setTeamId(teamId);
+        teamMemberDao.add(teamMember);
+
+
+        TeamMember teamMember1 = new TeamMember();
+        teamMember1.setName("jill");
+        teamMember1.setTeamId(teamId);
+        teamMemberDao.add(teamMember1);
+
+        TeamMember teamMember2 = new TeamMember();
+        teamMember2.setName("jim");
+        teamMember2.setTeamId(teamId);
+
+        assertEquals(2, teamDao.getAllTeamMembersByTeam(teamId).size());
+        assertTrue(teamDao.getAllTeamMembersByTeam(teamId).contains(teamMember));
+        assertTrue(teamDao.getAllTeamMembersByTeam(teamId).contains(teamMember1));
+        assertFalse(teamDao.getAllTeamMembersByTeam(teamId).contains(teamMember2));
+    }
+
 }

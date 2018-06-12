@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface TeamMemberDao {
 
-
     void add(TeamMember name);
 
     TeamMember findById(int id);

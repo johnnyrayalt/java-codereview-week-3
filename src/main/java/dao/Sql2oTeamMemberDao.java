@@ -19,14 +19,14 @@ public class Sql2oTeamMemberDao implements TeamMemberDao {
 
 
     @Override
-    public void add(TeamMember newTeamMember) {
-        String sql = "INSERT INTO team_members (name) VALUES (:name)";
+    public void add(TeamMember teamMember) {
+        String sql = "INSERT INTO team_members (name, teamid) VALUES (:name, :teamId)";
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql, true)
-                    .bind(newTeamMember)
+                    .bind(teamMember)
                     .executeUpdate()
                     .getKey();
-            newTeamMember.setId(id);
+            teamMember.setId(id);
         } catch (Sql2oException ex) {
             System.out.println(ex);
         }
