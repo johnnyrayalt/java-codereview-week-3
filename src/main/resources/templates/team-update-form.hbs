@@ -3,11 +3,9 @@
         <h1>Edit {{editTeam.teamName}}</h1>
         <form action="/team/{{editTeam.id}}" method="POST">
             <label for="teamName">Change Team Name</label><br>
-            <input type="text" id="teamName" name="teamName"><br>
+            <input type="text" id="teamName" name="teamName" value="{{editTeam.teamName}}"><br>
             <label for="teamDescription">Change Team Description</label><br>
-            <input type="text" id="teamDescription" name="teamDescription"><br>
-            <label for="teamMembers">Add A Team Member</label><br>
-            <input type="text" id="teamMembers" name="teamMembers"><br>
+            <input type="text" id="teamDescription" name="teamDescription" value="{{editTeam.teamDescription}}"><br>
             <button class="btn btn-success" type="submit">Update</button>
         </form>
     {{else}}
@@ -17,8 +15,6 @@
             <input type="text" id="teamName" name="teamName"><br>
             <label for="teamDescription">Team Description</label><br>
             <input type="text" id="teamDescription" name="teamDescription"><br>
-            <label for="teamMembers">Add A Team Member</label><br>
-            <input type="text" id="teamMembers" name="teamMembers"><br>
             <button class="btn btn-success" type="submit">Add</button>
         </form>
 

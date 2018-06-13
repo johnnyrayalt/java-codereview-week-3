@@ -50,11 +50,6 @@ public class App {
             return new ModelAndView(model, "team-update-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        //add new team member
-//        get("/teammember/new", (request, response) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            return new ModelAndView(model, )
-//        }, new HandlebarsTemplateEngine());
 
         //process new team form
         post("/team", (request, response) -> {
@@ -90,11 +85,23 @@ public class App {
 
         //process update form
         post("/team/:id", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
             String newTeamName = request.queryParams("teamName");
+            String newTeamDescription = request.queryParams("teamDescription");
             int idOfTeamToEdit = Integer.parseInt(request.params("id"));
-            teamDao.update(idOfTeamToEdit, newTeamName);
+            teamDao.update(idOfTeamToEdit, newTeamName, newTeamDescription);
             response.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+        //process new members
+        post("teams/:id", (request, response) -> {
+            String teamMemberName = request.queryParams("teamMember");
+            int teamId = Integer.parseInt("id");
+            TeamMember teamMember = new TeamMember();
+            teamMember.setName(teamMemberName);
+            teamMember.setTeamId(teamId);
+            teamMemberDao.add(teamMember);
+            response.redirect("/teams/:id");
             return null;
         }, new HandlebarsTemplateEngine());
 

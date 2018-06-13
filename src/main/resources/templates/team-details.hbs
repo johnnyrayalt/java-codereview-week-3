@@ -8,13 +8,18 @@
 
     {{#if teamMembers}}
         {{#each teamMembers}}
-            <li><a href="/teammember/{{id}}">{{name}}</a></li>
+            <li>+ <a href="/teammember/{{id}}">{{name}}</a></li>
         {{/each}}
-        <li><a href="/teammember/new">Add a Team Member</a></li>
+        <li>Add a Team Member</li>
+        <form action="/team/{{id}}" method="post">
+            <input type="text" id="teamMember" name="teamMember">
 
     {{else}}
-        <li><a href="/teammember/new">Add a Team Member</a></li>
+        <form action="/team/{{id}}" method="post">
+            <input type="text" id="teamMember" name="teamMember">
     {{/if}}
+        <button class="btn btn-success" type="submit">Add</button>
+        </form>
 
     <a href="/team/{{team.id}}/update">Update team name or add more team members</a><br>
     <a href="/team/{{team.id}}/delete">Delete</a><br>
