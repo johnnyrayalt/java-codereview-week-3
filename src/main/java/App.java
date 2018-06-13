@@ -28,7 +28,6 @@ public class App {
 
         //delete all teams
         get("/team/delete", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
             teamDao.clearAllTeams();
             response.redirect("/");
             return null;
@@ -36,7 +35,6 @@ public class App {
 
         //delete team by id
         get("/team/:id/delete", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
             int idOfTeamToDelete = Integer.parseInt(request.params("id"));
             teamDao.deleteById(idOfTeamToDelete);
             response.redirect("/");
@@ -102,6 +100,15 @@ public class App {
             teamMember.setName(teamMemberName);
             teamMember.setTeamId(teamId);
             teamMemberDao.add(teamMember);
+            response.redirect("/team/" + teamId);
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+        get("/team/:id/deleteteammember", (request, response) -> {
+            int idOfTeamMemberToDelete = Integer.parseInt(request.params("id"));
+            TeamMember teamMemberToDelete = teamMemberDao.findById(idOfTeamMemberToDelete);
+            int teamId = teamMemberToDelete.getTeamId();
+            teamMemberDao.deleteById(idOfTeamMemberToDelete);
             response.redirect("/team/" + teamId);
             return null;
         }, new HandlebarsTemplateEngine());

@@ -8,7 +8,14 @@
 
     {{#if teamMembers}}
         {{#each teamMembers}}
-            <li>+ {{this.name}}</li>
+            <li>
+                + {{this.name}}
+                <form action="/team/{{this.id}}/deleteteammember">
+                    <button type="submit">X</button>
+                </form>
+
+
+            </li>
         {{/each}}
     {{else}}
         <p>Get 'ta addin'!</p>
