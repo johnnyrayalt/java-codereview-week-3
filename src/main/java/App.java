@@ -1,7 +1,9 @@
 import java.util.*;
 
 import dao.Sql2oTeamDao;
+import dao.Sql2oTeamMemberDao;
 import models.Team;
+import models.TeamMember;
 import org.sql2o.Sql2o;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -14,6 +16,7 @@ public class App {
         String connectionString = "jdbc:h2:~/hackaton_teams.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         Sql2oTeamDao teamDao = new Sql2oTeamDao(sql2o);
+        Sql2oTeamMemberDao teamMemberDao = new Sql2oTeamMemberDao(sql2o);
 
         // root
         get("/", (request, response) -> {
@@ -47,6 +50,12 @@ public class App {
             return new ModelAndView(model, "team-update-form.hbs");
         }, new HandlebarsTemplateEngine());
 
+        //add new team member
+//        get("/teammember/new", (request, response) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            return new ModelAndView(model, )
+//        }, new HandlebarsTemplateEngine());
+
         //process new team form
         post("/team", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
@@ -66,6 +75,7 @@ public class App {
             int idOfTeamToFind = Integer.parseInt(req.params("id"));
             Team foundTeam = teamDao.findById(idOfTeamToFind);
             model.put("team", foundTeam);
+//            List<TeamMember> teamMembers = teamMemberDao.getAll
             return new ModelAndView(model, "team-details.hbs");
         }, new HandlebarsTemplateEngine());
 

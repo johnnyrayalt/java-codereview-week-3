@@ -3,6 +3,9 @@ package dao;
 import models.*;
 import org.sql2o.*;
 import org.junit.*;
+
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class Sql2oTeamMemberDaoTest {
@@ -79,6 +82,30 @@ public class Sql2oTeamMemberDaoTest {
         int originalTeamId = teamMember.getTeamId();
         teamMemberDao.add(teamMember);
         assertEquals(originalTeamId, teamMemberDao.findById(teamMember.getId()).getTeamId());
+    }
+
+    @Test
+    public void getAllMembersByTeamIdGetsAllMembersCorrectly() throws Exception {
+        TeamMember teamMember = new TeamMember();
+        TeamMember teamMember1 = new TeamMember();
+        TeamMember teamMember2 = new TeamMember();
+
+        teamMember.setName("name");
+        teamMember1.setName("name1");
+        teamMember2.setName("name2");
+
+        teamMember.setTeamId(1);
+        teamMember1.setTeamId(1);
+        teamMember2.setTeamId(2);
+
+        teamMemberDao.add(teamMember);
+        teamMemberDao.add(teamMember1);
+        teamMemberDao.add(teamMember2);
+
+        List<TeamMember> allTeamOneMembers = teamMemberDao.getAllMembersByTeamId(1);
+        assertEquals(2, allTeamOneMembers.size());
+        assertTrue(allTeamOneMembers.contains(teamMember));
+        assertFalse(allTeamOneMembers.contains(teamMember2));
     }
 
     public TeamMember setUpNewTeamMemberName() {

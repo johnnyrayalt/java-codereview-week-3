@@ -51,6 +51,15 @@ public class Sql2oTeamMemberDao implements TeamMemberDao {
     }
 
     @Override
+    public List<TeamMember> getAllMembersByTeamId(int teamId) {
+        try(Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM team_members WHERE teamid = :teamId")
+                    .addParameter("teamId", teamId)
+                    .executeAndFetch(TeamMember.class);
+        }
+    }
+
+    @Override
     public void update(int id, String newName, int newTeamId) {
         String sql = "UPDATE team_members SET (name, teamid) = (:name, :teamid) WHERE id = :id";
         try(Connection con = sql2o.open()) {

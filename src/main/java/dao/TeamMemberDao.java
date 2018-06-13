@@ -10,6 +10,7 @@ public interface TeamMemberDao {
 
     TeamMember findById(int id);
     List<TeamMember> getAll();
+    List<TeamMember> getAllMembersByTeamId(int teamId);
 
     void update(int id, String name, int teamId);
 

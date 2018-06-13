@@ -5,7 +5,16 @@
     <p>Team Description</p>
     <p>+ {{ team.teamDescription }}</p>
     <p>Team Members</p>
-    <p>+ {{team.teamMembers}}</p>
+
+    {{#if teamMembers}}
+        {{#each teamMembers}}
+            <li><a href="/teammember/{{id}}">{{name}}</a></li>
+        {{/each}}
+        <li><a href="/teammember/new">Add a Team Member</a></li>
+
+    {{else}}
+        <li><a href="/teammember/new">Add a Team Member</a></li>
+    {{/if}}
 
     <a href="/team/{{team.id}}/update">Update team name or add more team members</a><br>
     <a href="/team/{{team.id}}/delete">Delete</a><br>
