@@ -1,27 +1,24 @@
 {{#partial "content"}}
 
-    <p>Team Name</p>
+    <h4>Team Name</h4>
     <p>+ {{ team.teamName }}</p>
-    <p>Team Description</p>
+    <h4>Team Description</h4>
     <p>+ {{ team.teamDescription }}</p>
-    <p>Team Members</p>
+    <h4>Team Members</h4>
 
     {{#if teamMembers}}
         {{#each teamMembers}}
-            <li>+ <a href="/teammember/{{id}}">{{name}}</a></li>
+            <li>+ {{this.name}}</li>
         {{/each}}
-        <li>Add a Team Member</li>
-        <form action="/team/{{id}}" method="post">
-            <input type="text" id="teamMember" name="teamMember">
-
     {{else}}
-        <form action="/team/{{id}}" method="post">
-            <input type="text" id="teamMember" name="teamMember">
+        <p>Get 'ta addin'!</p>
     {{/if}}
-        <button class="btn btn-success" type="submit">Add</button>
+        <form action="/team/{{team.id}}/addteammember" method="post">
+            <input type="text" id="teamMember" name="teamMember">
+            <button class="btn btn-success" type="submit">Add</button>
         </form>
 
-    <a href="/team/{{team.id}}/update">Update team name or add more team members</a><br>
+    <a href="/team/{{team.id}}/update">Update team name or description</a><br>
     <a href="/team/{{team.id}}/delete">Delete</a><br>
     <a href="/">back to home</a>
 

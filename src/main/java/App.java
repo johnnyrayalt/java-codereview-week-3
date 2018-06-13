@@ -70,7 +70,8 @@ public class App {
             int idOfTeamToFind = Integer.parseInt(req.params("id"));
             Team foundTeam = teamDao.findById(idOfTeamToFind);
             model.put("team", foundTeam);
-//            List<TeamMember> teamMembers = teamMemberDao.getAll
+            List<TeamMember> teamMembers = teamMemberDao.getAllMembersByTeamId(idOfTeamToFind);
+            model.put("teamMembers", teamMembers);
             return new ModelAndView(model, "team-details.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -94,14 +95,14 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         //process new members
-        post("teams/:id", (request, response) -> {
+        post("/team/:id/addteammember", (request, response) -> {
             String teamMemberName = request.queryParams("teamMember");
-            int teamId = Integer.parseInt("id");
+            int teamId = Integer.parseInt(request.params("id"));
             TeamMember teamMember = new TeamMember();
             teamMember.setName(teamMemberName);
             teamMember.setTeamId(teamId);
             teamMemberDao.add(teamMember);
-            response.redirect("/teams/:id");
+            response.redirect("/team/" + teamId);
             return null;
         }, new HandlebarsTemplateEngine());
 
