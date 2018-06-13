@@ -13,7 +13,7 @@ _This app is a simple tracker that logs a team with a name, members, and a descr
 * Note: This application was build in Intellij v 2017.3.x community edition, therefore these set up instructions assume you have some compatable version of Intellij
 
 #### Java Installation Instructions:
-* from the command line enter `$ brew cask info java ` and follow instructions
+* from the command line enter `$ brew cask install java ` and follow instructions
 
 #### Running Application:
 * Open project directory in IntelliJ IDEA
